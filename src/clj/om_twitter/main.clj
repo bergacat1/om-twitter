@@ -2,6 +2,7 @@
   (:gen-class)
   (:require  [twitterclient.component :as tc]
              [twitterreader.component :as tr]
+             [communicator.component :as comm]
              [clojure.edn :as edn]
              [clojure.tools.logging :as log]
              [clj-pid.core :as pid]
@@ -16,7 +17,10 @@
   (component/system-map
    :twitterclient-channels (tc/new-twitterclient-channels)
    :twitterclient (component/using (tc/new-twitterclient conf) {:channels :twitterclient-channels})
-   :twitterreader (component/using (tr/new-twitterreader) {:channels :twitterclient-channels})))
+   :twitterreader (component/using (tr/new-twitterreader) {:channels :twitterclient-channels})
+   :comm-channels          (comm/new-communicator-channels)
+   :comm          (component/using (comm/new-communicator)     {:channels   :comm-channels
+                                                                :tc-chans   :twitterclient})))
 
 (def system (get-system conf))
 
