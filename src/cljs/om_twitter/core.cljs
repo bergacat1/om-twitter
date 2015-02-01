@@ -1,14 +1,8 @@
-(ns birdwatch.core
-  (:require [birdwatch.util :as util]
-            [birdwatch.charts.ts-chart :as ts-c]
-            [birdwatch.communicator :as comm]
-            [birdwatch.charts.wordcount-chart :as wc-c]
-            [birdwatch.charts.cloud-chart :as cloud]
-            [birdwatch.ui.tweets :as tw]
-            [birdwatch.ui.elements :as ui]
-            [birdwatch.state.data :as state]
-            [birdwatch.stats.timeseries :as ts]
-            [birdwatch.stats.wordcount :as wc]
+(ns om_twitter.core
+  (:require [om_twitter.communicator :as comm]
+            [om_twitter.ui.tweets :as tw]
+            [om_twitter.ui.elements :as ui]
+            [om_twitter.state.data :as state]
             [cljs.core.async :as async :refer [chan pub]]))
 
 ;;;; Main file of the BirdWatch client-side application.

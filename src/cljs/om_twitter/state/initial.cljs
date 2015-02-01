@@ -1,5 +1,5 @@
-(ns birdwatch.state.initial
-  (:require [birdwatch.util :as util]
+(ns om_twitter.state.initial
+  (:require [om_twitter.util :as util]
             [tailrecursion.priority-map :refer [priority-map-by]]))
 
 (defn initial-state

@@ -1,5 +1,5 @@
-(ns birdwatch.state.search
-  (:require [birdwatch.util :as util]
+(ns om_twitter.state.search
+  (:require [om_twitter.util :as util]
             [cljs.core.async :as async :refer [put!]]))
 
 (defn append-search-text

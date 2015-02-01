@@ -24,7 +24,12 @@
                  [clj-pid "0.1.1"]
                  [com.stuartsierra/component "0.2.2"]
                  [org.clojure/tools.logging "0.3.1"]
-                 [ch.qos.logback/logback-classic "1.1.2"]]
+                 [ch.qos.logback/logback-classic "1.1.2"]
+                 [com.taoensso/sente "1.3.0-RC1"]
+                 [org.clojure/core.match "0.3.0-alpha3"]
+                 [com.matthiasnehlsen/inspect "0.1.3"]
+                 [com.cognitect/transit-clj  "0.8.259"]
+                 [tailrecursion/cljs-priority-map "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-environ "1.0.0"]]

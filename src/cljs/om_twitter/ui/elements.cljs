@@ -1,6 +1,6 @@
-(ns birdwatch.ui.elements
+(ns om_twitter.ui.elements
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
-  (:require [birdwatch.util :as util]
+  (:require [om_twitter.util :as util]
             [cljs.core.async :as async :refer [put! pipe chan sub timeout sliding-buffer]]
             [reagent.core :as r :refer [atom]]))
 

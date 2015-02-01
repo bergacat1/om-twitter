@@ -1,4 +1,4 @@
-(ns birdwatch.ui.util
+(ns om_twitter.ui.util
   (:require [clojure.string :as s]))
 
 (defn by-id

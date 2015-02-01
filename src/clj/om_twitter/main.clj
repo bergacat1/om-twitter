@@ -19,7 +19,7 @@
    :twitterclient (component/using (tc/new-twitterclient conf) {:channels :twitterclient-channels})
    :twitterreader (component/using (tr/new-twitterreader) {:channels :twitterclient-channels})
    :comm-channels          (comm/new-communicator-channels)
-   :comm          (component/using (comm/new-communicator)     {:channels   :comm-channels
+   :comm          (component/using (comm/new-communicator)     {:comm-chans   :comm-channels
                                                                 :tc-chans   :twitterclient})))
 
 (def system (get-system conf))

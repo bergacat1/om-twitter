@@ -1,5 +1,4 @@
-(ns birdwatch.state.proc
-  (:require [birdwatch.stats.wordcount :as wc]))
+(ns om_twitter.state.proc)
 
 (defn swap-pmap
   "swaps item in priority-map"
@@ -51,5 +50,4 @@
     (swap-pmap app :by-followers id-key (:followers_count (:user tweet)))
     (swap-pmap app :by-id id-key id-str)
     (swap-pmap app :by-reach id-key (+ (get (:by-reach state) id-key 0) (:followers_count (:user tweet))))
-    (add-rt-status! app tweet)
-    (add-words app (wc/words-in-tweet (:text tweet)))))
+    (add-rt-status! app tweet)))

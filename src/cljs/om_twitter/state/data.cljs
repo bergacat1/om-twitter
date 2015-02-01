@@ -1,6 +1,6 @@
-(ns birdwatch.state.data
-  (:require [birdwatch.state.initial :as i]
-            [birdwatch.state.comm :as c]))
+(ns om_twitter.state.data
+  (:require [om_twitter.state.initial :as i]
+            [om_twitter.state.comm :as c]))
 
 (defn init-state
   "Init app state and wire all channels required in the state namespace. The app

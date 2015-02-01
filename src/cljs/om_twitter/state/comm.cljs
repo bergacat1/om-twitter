@@ -1,8 +1,8 @@
-(ns birdwatch.state.comm
+(ns om_twitter.state.comm
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
-  (:require [birdwatch.state.search :as s]
-            [birdwatch.state.initial :as i]
-            [birdwatch.state.proc :as p]
+  (:require [om_twitter.state.search :as s]
+            [om_twitter.state.initial :as i]
+            [om_twitter.state.proc :as p]
             [cljs.core.async :as async :refer [<! put! pipe timeout chan sliding-buffer]]
             [cljs.core.match :refer-macros [match]]))
 

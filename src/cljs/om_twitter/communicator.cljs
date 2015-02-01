@@ -1,4 +1,4 @@
-(ns birdwatch.communicator
+(ns om_twitter.communicator
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
   (:require [cljs.core.match :refer-macros [match]]
             [taoensso.sente  :as sente  :refer (cb-success?)]

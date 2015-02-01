@@ -11,17 +11,15 @@
 
 (def packer (sente-transit/get-flexi-packer :json)) ;; serialization format for client<->server comm
 
-(defrecord Communicator [channels tc-chans chsk-router]
+(defrecord Communicator [comm-chans tc-chans chsk-router]
   component/Lifecycle
   (start [component] (log/info "Starting Communicator Component")
          (let [{:keys [ch-recv send-fn ajax-post-fn ajax-get-or-ws-handshake-fn connected-uids]}
                (sente/make-channel-socket! {:packer packer :user-id-fn ws/user-id-fn})
-               event-handler (ws/make-handler (:query channels) (:tweet-missing channels) (:register-perc channels))
+               event-handler (ws/make-handler (:query comm-chans) (:tweet-missing comm-chans) (:register-perc comm-chans))
                chsk-router (sente/start-chsk-router! ch-recv event-handler)]
            (ws/run-users-count-loop send-fn connected-uids)
-           (ws/send-loop (:tweet-count channels) (ws/tweet-stats connected-uids send-fn))
-           (ws/send-loop (:tweets tc-chans) (ws/relay-msg :tweet/prev-chunk :result send-fn))
-           (ws/send-loop (:missing-tweet-found channels) (ws/relay-msg :tweet/missing-tweet :tweet send-fn))
+           (ws/send-loop (:tweets tc-chans) send-fn)
            (assoc component :ajax-post-fn ajax-post-fn
                             :ajax-get-or-ws-handshake-fn ajax-get-or-ws-handshake-fn
                             :chsk-router chsk-router)))
