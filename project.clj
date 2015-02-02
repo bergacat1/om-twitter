@@ -9,6 +9,7 @@
   :dependencies [[org.clojure/clojure "1.7.0-alpha4"]
                  [org.clojure/clojurescript "0.0-2657" :scope "provided"]
                  [ring "1.3.2"]
+                 [ring/ring-defaults "0.1.1"]
                  [compojure "1.3.1"]
                  [enlive "1.1.5"]
                  [om "0.7.3"]
@@ -29,7 +30,8 @@
                  [org.clojure/core.match "0.3.0-alpha3"]
                  [com.matthiasnehlsen/inspect "0.1.3"]
                  [com.cognitect/transit-clj  "0.8.259"]
-                 [tailrecursion/cljs-priority-map "1.1.0"]]
+                 [tailrecursion/cljs-priority-map "1.1.0"]
+                 [http-kit "2.1.19"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-environ "1.0.0"]]

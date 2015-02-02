@@ -29,7 +29,7 @@
 (defn send-loop
   "run loop, call f with message on channel"
   [channel f]
-  (go-loop [] (let [msg (<! channel)] (f msg)) (recur)))
+  (go-loop [] (let [msg (<! channel)] (println (:text msg))) (recur)))
 
 (defn tweet-stats
   "send stats about number of indexed tweets to all connected clients"

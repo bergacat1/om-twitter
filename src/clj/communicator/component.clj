@@ -15,17 +15,20 @@
   component/Lifecycle
   (start [component] (log/info "Starting Communicator Component")
          (let [{:keys [ch-recv send-fn ajax-post-fn ajax-get-or-ws-handshake-fn connected-uids]}
-               (sente/make-channel-socket! {:packer packer :user-id-fn ws/user-id-fn})
-               event-handler (ws/make-handler (:query comm-chans) (:tweet-missing comm-chans) (:register-perc comm-chans))
-               chsk-router (sente/start-chsk-router! ch-recv event-handler)]
-           (ws/run-users-count-loop send-fn connected-uids)
+               (sente/make-channel-socket! {:packer packer :user-id-fn ws/user-id-fn})]
            (ws/send-loop (:tweets tc-chans) send-fn)
-           (assoc component :ajax-post-fn ajax-post-fn
+           (assoc component :ch-recv ch-recv
+                            :send-fn send-fn
+                            :ajax-post-fn ajax-post-fn
                             :ajax-get-or-ws-handshake-fn ajax-get-or-ws-handshake-fn
-                            :chsk-router chsk-router)))
+                            :connected-uids connected-uids)))
   (stop [component] (log/info "Stopping Communicator Component")
-        (chsk-router) ;; stops router loop
-        (assoc component :chsk-router nil)))
+        ;(chsk-router) ;; stops router loop
+        (assoc component :ch-recv nil
+                         :send-fn nil
+                         :ajax-post-fn nil
+                         :ajax-get-or-ws-handshake-fn nil
+                         :connected-uids nil)))
 
 (defn new-communicator [] (map->Communicator {}))
 

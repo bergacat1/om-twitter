@@ -14,7 +14,7 @@
   (start [component] (log/info "Starting Twitterreader component")
     (let [tweet-chan (:tweets channels)
           read-active (atom true)]
-      (read-tweets tweet-chan read-active)
+      ;(read-tweets tweet-chan read-active)
       (assoc component :read-active read-active)))
 
   (stop [component] (log/info "Stopping Twitterreader component")

@@ -19,7 +19,7 @@
                watch-active (atom false)]
            (http-client/start-twitter-conn! conf conn chunk-chan)
            (pipe chunk-chan (:tweets channels) false)
-           (http-client/run-watch-loop conf conn chunk-chan last-received watch-active)
+           ;(http-client/run-watch-loop conf conn chunk-chan last-received watch-active)
            (assoc component :conn conn :chunk-chan chunk-chan :watch-active watch-active)))
 
   (stop [component] (log/info "Stopping Twitterclient Component")
