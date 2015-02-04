@@ -11,7 +11,8 @@
   [data-chan qry-chan stats-chan cmd-chan state-pub-chan]
   (let [app (atom {})]
     (i/init app)
-    (c/stats-loop stats-chan app)
+    ;(c/stats-loop stats-chan app)
     (c/data-loop data-chan qry-chan app)
-    (c/cmd-loop cmd-chan qry-chan app)
-    (c/broadcast-state state-pub-chan app)))
+    ;(c/cmd-loop cmd-chan qry-chan app)
+    ;(c/broadcast-state state-pub-chan app)
+    ))

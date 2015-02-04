@@ -3,21 +3,20 @@
   (:require [om_twitter.state.search :as s]
             [om_twitter.state.initial :as i]
             [om_twitter.state.proc :as p]
-            [cljs.core.async :as async :refer [<! put! pipe timeout chan sliding-buffer]]
-            [cljs.core.match :refer-macros [match]]))
+            [cljs.core.async :as async :refer [<! put! pipe timeout chan sliding-buffer]]))
 
 ;;;; Channels processing namespace. Here, messages are taken from channels and processed.
 
-(defn- stats-loop
-  "Process messages from the stats channel and update application state accordingly."
-  [stats-chan app]
-  (go-loop []
-           (let [msg (<! stats-chan)]
-             (match msg
-                    [:stats/users-count       n] (swap! app assoc :users-count n)
-                    [:stats/total-tweet-count n] (swap! app assoc :total-tweet-count n)
-                    :else (prn "unknown msg in stats-loop" msg))
-             (recur))))
+;(defn- stats-loop
+;  "Process messages from the stats channel and update application state accordingly."
+;  [stats-chan app]
+;  (go-loop []
+;           (let [msg (<! stats-chan)]
+;             (match msg
+;                    [:stats/users-count       n] (swap! app assoc :users-count n)
+;                    [:stats/total-tweet-count n] (swap! app assoc :total-tweet-count n)
+;                    :else (prn "unknown msg in stats-loop" msg))
+;             (recur))))
 
 (defn- prev-chunks-loop
   "Take messages (vectors of tweets) from prev-chunks-chan, add each tweet to application
@@ -39,40 +38,34 @@
     (prev-chunks-loop prev-chunks-chan app)
     (go-loop []
              (let [msg (<! data-chan)]
-               (match msg
-                      [:tweet/new             tweet] (p/add-tweet! tweet app)
-                      [:tweet/missing-tweet   tweet] (p/add-to-tweets-map! app :tweets-map tweet)
-                      [:tweet/prev-chunk prev-chunk] (do
-                                                       (put! prev-chunks-chan prev-chunk)
-                                                       (s/load-prev app qry-chan))
-                      :else (prn "unknown msg in data-loop" msg))
+               (prn (:text msg))
                (recur)))))
 
-(defn- cmd-loop
-  "Process command messages, e.g. those that alter application state."
-  [cmd-chan qry-chan app]
-  (go-loop []
-           (let [msg (<! cmd-chan)]
-             (match msg
-                    [:toggle-live            ] (swap! app update :live not)
-                    [:set-search-text    text] (swap! app assoc :search-text text)
-                    [:set-current-page   page] (swap! app assoc :page page)
-                    [:set-page-size         n] (swap! app assoc :n n)
-                    [:start-search           ] (s/start-search app (i/initial-state) qry-chan)
-                    [:set-sort-order by-order] (swap! app assoc :sorted by-order)
-                    [:retrieve-missing id-str] (put! qry-chan [:cmd/missing {:id_str id-str}])
-                    [:append-search-text text] (s/append-search-text text app)
-                    :else (prn "unknown msg in cmd-loop" msg))
-             (recur))))
-
-(defn- broadcast-state
-  "Broadcast state changes on the specified channel. Internally uses a sliding
-   buffer of size one in order to not overwhelm the rest of the system with too
-   frequent updates. The only one that matters next is the latest state anyway.
-   It doesn't harm to drop older ones on the channel."
-  [pub-chan app]
-  (let [sliding-chan (chan (sliding-buffer 1))]
-    (pipe sliding-chan pub-chan)
-    (add-watch app :watcher
-               (fn [_ _ _ new-state]
-                 (put! sliding-chan [:app-state new-state])))))
+;(defn- cmd-loop
+;  "Process command messages, e.g. those that alter application state."
+;  [cmd-chan qry-chan app]
+;  (go-loop []
+;           (let [msg (<! cmd-chan)]
+;             (match msg
+;                    [:toggle-live            ] (swap! app update :live not)
+;                    [:set-search-text    text] (swap! app assoc :search-text text)
+;                    [:set-current-page   page] (swap! app assoc :page page)
+;                    [:set-page-size         n] (swap! app assoc :n n)
+;                    [:start-search           ] (s/start-search app (i/initial-state) qry-chan)
+;                    [:set-sort-order by-order] (swap! app assoc :sorted by-order)
+;                    [:retrieve-missing id-str] (put! qry-chan [:cmd/missing {:id_str id-str}])
+;                    [:append-search-text text] (s/append-search-text text app)
+;                    :else (prn "unknown msg in cmd-loop" msg))
+;             (recur))))
+;
+;(defn- broadcast-state
+;  "Broadcast state changes on the specified channel. Internally uses a sliding
+;   buffer of size one in order to not overwhelm the rest of the system with too
+;   frequent updates. The only one that matters next is the latest state anyway.
+;   It doesn't harm to drop older ones on the channel."
+;  [pub-chan app]
+;  (let [sliding-chan (chan (sliding-buffer 1))]
+;    (pipe sliding-chan pub-chan)
+;    (add-watch app :watcher
+;               (fn [_ _ _ new-state]
+;                 (put! sliding-chan [:app-state new-state])))))

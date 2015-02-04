@@ -7,7 +7,7 @@
   :source-paths ["src/clj" "src/cljs"]
 
   :dependencies [[org.clojure/clojure "1.7.0-alpha4"]
-                 [org.clojure/clojurescript "0.0-2657" :scope "provided"]
+                 [org.clojure/clojurescript "0.0-2760" :scope "provided"]
                  [ring "1.3.2"]
                  [ring/ring-defaults "0.1.1"]
                  [compojure "1.3.1"]
@@ -26,10 +26,10 @@
                  [com.stuartsierra/component "0.2.2"]
                  [org.clojure/tools.logging "0.3.1"]
                  [ch.qos.logback/logback-classic "1.1.2"]
-                 [com.taoensso/sente "1.3.0-RC1"]
-                 [org.clojure/core.match "0.3.0-alpha3"]
+                 [org.clojure/core.match "0.3.0-alpha4"]
                  [com.matthiasnehlsen/inspect "0.1.3"]
                  [com.cognitect/transit-clj  "0.8.259"]
+                 [com.taoensso/sente "1.3.0"]
                  [tailrecursion/cljs-priority-map "1.1.0"]
                  [http-kit "2.1.19"]]
 

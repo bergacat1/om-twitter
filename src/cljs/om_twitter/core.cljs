@@ -1,7 +1,7 @@
 (ns om_twitter.core
   (:require [om_twitter.communicator :as comm]
-            [om_twitter.ui.tweets :as tw]
-            [om_twitter.ui.elements :as ui]
+            ;[om_twitter.ui.tweets :as tw]
+            ;[om_twitter.ui.elements :as ui]
             [om_twitter.state.data :as state]
             [cljs.core.async :as async :refer [chan pub]]))
 
@@ -19,11 +19,11 @@
 (state/init-state data-chan qry-chan stats-chan cmd-chan state-pub-chan)
 
 ;;; Initialization of WebSocket communication.
-(comm/start-communicator cmd-chan data-chan stats-chan qry-chan)
+(comm/start-communicator data-chan)
 
 ;;; Initialize Reagent components and inject channels.
-(ui/init-views         state-pub cmd-chan)
-(tw/mount-tweets       state-pub cmd-chan)
-(wc-c/mount-wc-chart   state-pub cmd-chan {:bars 25 :every-ms 1000})
-(cloud/mount-wordcloud state-pub cmd-chan {:n 250 :every-ms 5000})
-(ts-c/mount-ts-chart   state-pub {:every-ms 1000})
+;(ui/init-views         state-pub cmd-chan)
+;(tw/mount-tweets       state-pub cmd-chan)
+;(wc-c/mount-wc-chart   state-pub cmd-chan {:bars 25 :every-ms 1000})
+;(cloud/mount-wordcloud state-pub cmd-chan {:n 250 :every-ms 5000})
+;(ts-c/mount-ts-chart   state-pub {:every-ms 1000})
