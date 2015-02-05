@@ -14,6 +14,7 @@
 (def cmd-chan   (chan)) ; Web-client internal command messages (e.g. state modification).
 (def state-pub-chan (chan)) ; Publication of state changes.
 (def state-pub (pub state-pub-chan first)) ; Pub for subscribing to
+(println "eeeeeee")
 
 ;;; Initialize application state (atom in state namespace) and wire channels.
 (state/init-state data-chan qry-chan stats-chan cmd-chan state-pub-chan)

@@ -13,7 +13,7 @@
    start-function to call when the socket is established."
   [data-chan]
   (fn [payload]
-    (put! data-chan payload)))
+    (println payload)))
 
 (defn query-loop
   "Take command / query message off of channel, enrich payload with :uid of current

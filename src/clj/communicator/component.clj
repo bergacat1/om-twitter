@@ -16,7 +16,7 @@
   (start [component] (log/info "Starting Communicator Component")
          (let [{:keys [ch-recv send-fn ajax-post-fn ajax-get-or-ws-handshake-fn connected-uids]}
                (sente/make-channel-socket! {:packer packer :user-id-fn ws/user-id-fn})]
-           (ws/send-loop (:tweets tc-chans) send-fn)
+           (ws/send-loop (:tweets tc-chans) send-fn connected-uids)
            (assoc component :ch-recv ch-recv
                             :send-fn send-fn
                             :ajax-post-fn ajax-post-fn

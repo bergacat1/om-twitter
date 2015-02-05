@@ -28,8 +28,12 @@
 
 (defn send-loop
   "run loop, call f with message on channel"
-  [channel f]
-  (go-loop [] (let [msg (<! channel)] (println (:text msg))) (recur)))
+  [channel chsk-send! uids]
+  (go-loop []
+    (let [msg (<! channel)]
+      (doseq [uid (:any @uids)]
+      (chsk-send! uid (:text msg))))
+    (recur)))
 
 (defn tweet-stats
   "send stats about number of indexed tweets to all connected clients"
