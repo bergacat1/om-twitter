@@ -50,7 +50,7 @@
                                         :optimizations :whitespace
                                         :pretty-print  true}}}}
 
-  :profiles {:dev {:repl-options {:init-ns om-twitter.server
+  :profiles {:dev {:repl-options {:init-ns om-twitter.main
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
                    :plugins [[lein-figwheel "0.1.4-SNAPSHOT"]]
@@ -61,7 +61,7 @@
 
                    :env {:is-dev true}
 
-                   :cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}}
+                   :cljsbuild {:builds {:app {:source-paths ["src/cljs"]}}}}
 
              :uberjar {:hooks [leiningen.cljsbuild]
                        :env {:production true}
